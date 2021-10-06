@@ -1,0 +1,47 @@
+<script>
+/*
+https://shawsk.tistory.com
+add alt tag to image by file name automatically
+*/
+
+function addAltTagToImage(img) {
+	const ALT_TAG = "alt";
+	const TITLE_TAG = "title";
+	const DATA_FILENAME_TAG = "data-filename";
+
+	var attrs = img.attributes
+	var filename_item = attrs.getNamedItem(DATA_FILENAME_TAG);
+	if(!filename_item) {
+		return;
+	}
+
+	var filename = filename_item.value;
+	if(!filename) {
+		return;
+	}
+
+	var tag_value = filename.split('.')[0];
+	if (!img.hasAttribute(ALT_TAG)) {
+			img.setAttribute(ALT_TAG, tag_value);
+	}
+	if (!img.hasAttribute(TITLE_TAG)) {
+			img.setAttribute(TITLE_TAG, tag_value);
+	}
+}
+
+function updateImageAttribute() {
+	const IMG_TAG = "img";
+
+	// find all 'img' elements
+	var imgs = document.body.getElementsByTagName(IMG_TAG);
+
+	// add alt tag to img element while iterating all imgs
+	for (var i = 0; i < imgs.length; i++) {
+		addAltTagToImage(imgs[i]);
+  }
+} 
+
+$(document).ready(function() {
+  updateImageAttribute();
+});
+</script>
